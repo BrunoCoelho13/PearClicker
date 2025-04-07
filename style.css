@@ -1,0 +1,170 @@
+
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #8BC34A;
+    --accent-color: #000000;
+    --dark-color: #2E7D32;
+    --light-color: #ffffff;
+    --text-color: #000000;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--light-color), #f9f9f9);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: rgb(255, 255, 255);
+    box-shadow: var(--shadow);
+    border-radius: 0 0 20px 20px;
+}
+
+.cabecalho h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+#clicks {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: inline-block;
+    box-shadow: var(--shadow);
+}
+
+#quantia {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: var(--dark-color);
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 10px;
+    transition: all 0.3s;
+}
+
+button:hover {
+    transform: translateY(-5px);
+}
+
+button img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.1s;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:active img {
+    transform: scale(0.95);
+}
+
+#botao img {
+    border: 5px solid var(--accent-color);
+    width: 200px;
+    height: 200px;
+}
+
+.upgrades {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px auto;
+    gap: 25px;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.upgrade-item {
+    border: 3px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    background: white;
+    text-align: center;
+    width: 220px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+}
+
+.upgrade-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.upgrade-item p:first-child {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+    color: var(--dark-color);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.upgrade-item p:nth-child(3) {
+    font-weight: bold;
+    color: var(--dark-color);
+    margin: 5px 0;
+}
+
+.upgrade-item p:last-child {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0 0 0;
+}
+
+#bgMusic {
+    display: none;
+}
+
+/* Efeito de clique */
+@keyframes clickEffect {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.click-effect {
+    animation: clickEffect 0.2s ease-out;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .upgrades {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .upgrade-item {
+        width: 80%;
+    }
+    
+    button img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    #botao img {
+        width: 150px;
+        height: 150px;
+    }
+}

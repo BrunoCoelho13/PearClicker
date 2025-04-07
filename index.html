@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍐 Pêra Clicker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Elemento de áudio escondido -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="Marcelo Engraçado vs Leo Stronda - FanGame feito na Unity.mp3" type="audio/mpeg">
+    </audio>
+
+    <header>
+        <div class="cabecalho">
+            <h1>🍐 Pêra Clicker 🍐</h1>
+        </div>
+        <div class="cabecalho">
+            <p id="clicks">Você clicou: <span id="quantia">0</span></p>
+        </div>
+    </header>
+    <section style="text-align: center;">
+        <button id="botao" onclick="incrementar()"><img src="pera.jpeg" alt="Pera"></button>
+    </section>
+    <section class="upgrades">
+        <div class="upgrade-item" id="baby">
+            <p>🍐 Comprar Bebê Pêra</p>
+            <div id="bebe-container">
+                <button id="bebe-btn" onclick="comprarBebe()"><img src="bebe pera.jpeg" alt="Bebe Pera"></button>
+                <p>Custo: <span class="price">20</span> Clicks</p>
+                <p id="bebe-count">Bebês Pêra: 0 (+0.0/s)</p>
+            </div>
+        </div>
+        <div class="upgrade-item" id="teto">
+            <p>🍐 Comprar Pearto</p>
+            <div id="pearto-container">
+                <button id="pearto-btn" onclick="comprarPearto()"><img src="pearto.jpeg" alt="pearto"></button>
+                <p>Custo: <span class="price">100</span> Clicks</p>
+                <p id="pearto-count">Peartos: 0 (+0.0/s)</p>
+            </div>
+        </div>
+        <div class="upgrade-item" id="pearlison">
+            <p>🍐 Comprar Pearlison </p>
+            <div id="pearlison-container">
+                <button id="pearlison-btn" onclick="comprarPearlison()"><img src="Darlison.png" alt="darlison"></button>
+                <p>Custo: <span class="price">300</span> Clicks</p>
+                <p id="pearlison-count">Pearlisons: 0 (+0.0/s)</p>
+            </div>
+        </div>
+        <div class="upgrade-item" id="Pearto3d">
+            <p>🍐 Comprar Pearto 3D</p>
+            <div id="pearto3d-container">
+                <button id="pearto3d-btn" onclick="comprarPearto3d()"><img src="teto pera 3d.jpeg" alt="pearto3d"></button>
+                <p>Custo: <span class="price">700</span> Clicks</p>
+                <p id="pearto3d-count">Pearto 3D: 0 (+0.0/s)</p>
+            </div>
+        </div>
+        <div class="upgrade-item" id="dakimakura">
+            <p>🍐 Comprar Dakimakura</p>
+            <div id="dakimakura-container">
+                <button id="dakimakura-btn" onclick="comprarDakimakura()"><img src="dakimura.jpeg" alt="dakimakura"></button>
+                <p>Custo: <span class="price">1500</span> Clicks</p>
+                <p id="dakimakura-count">Dakimakura: 0 (+0.0/s)</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Variáveis do jogo
+        const quantidade = document.getElementById("quantia");
+        const bebeCountElement = document.getElementById("bebe-count");
+        const peartoCountElement = document.getElementById("pearto-count");
+        const pearlisonCountElement = document.getElementById("pearlison-count");
+        const pearto3dCountElement = document.getElementById("pearto3d-count");
+        const dakimakuraCountElement = document.getElementById("dakimakura-count");
+        const botao = document.getElementById("botao");
+        
+        let clicks = 0;
+        let bebes = 0;
+        let peartos = 0;
+        let pearlison = 0;
+        let pearto3d = 0;
+        let dakimakura = 0;
+        let clicksPerSecond = 0;
+        
+        let bebePrice = 20;
+        let peartoPrice = 100;
+        let pearlisonPrice = 300;
+        let pearto3dPrice = 700;
+        let dakimakuraPrice = 1500;
+        
+        const bgMusic = document.getElementById("bgMusic");
+
+        // Configuração inicial
+        document.addEventListener('DOMContentLoaded', function() {
+            bgMusic.volume = 0.3;
+            bgMusic.play().catch(e => {
+                console.log("Reprodução automática bloqueada:", e);
+            });
+            
+            // Atualiza os preços iniciais
+            updatePrices();
+            
+            // Adiciona efeito de clique
+            botao.addEventListener('click', function() {
+                this.classList.add('click-effect');
+                setTimeout(() => this.classList.remove('click-effect'), 200);
+            });
+        });
+
+        // Inicia o áudio no primeiro clique
+        document.body.addEventListener('click', function() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+            }
+        }, { once: true });
+
+        // Funções do jogo
+        function incrementar() {
+            clicks += 1;
+            updateDisplay();
+        }
+
+        function comprarBebe() {
+            if (clicks >= bebePrice) {
+                clicks -= bebePrice;
+                bebes += 1;
+                clicksPerSecond += 0.1;
+                bebePrice = Math.floor(bebePrice * 1.15);
+                updateDisplay();
+                updateBebeCount();
+                updatePrices();
+            } else {
+                alert(`Você precisa de mais ${bebePrice - clicks} cliques!`);
+            }
+        }
+
+        function comprarPearto() {
+            if (clicks >= peartoPrice) {
+                clicks -= peartoPrice;
+                peartos += 1;
+                clicksPerSecond += 3;
+                peartoPrice = Math.floor(peartoPrice * 1.15);
+                updateDisplay();
+                updatePeartoCount();
+                updatePrices();
+            } else {
+                alert(`Você precisa de mais ${peartoPrice - clicks} cliques!`);
+            }
+        }
+
+        function comprarPearlison() {
+            if (clicks >= pearlisonPrice) {
+                clicks -= pearlisonPrice;
+                pearlison += 1;
+                clicksPerSecond += 10;
+                pearlisonPrice = Math.floor(pearlisonPrice * 1.15);
+                updateDisplay();
+                updatePearlisonCount();
+                updatePrices();
+            } else {
+                alert(`Você precisa de mais ${pearlisonPrice - clicks} cliques!`);
+            }
+        }
+
+        function comprarPearto3d() {
+            if (clicks >= pearto3dPrice) {
+                clicks -= pearto3dPrice;
+                pearto3d += 1;
+                clicksPerSecond += 50;
+                pearto3dPrice = Math.floor(pearto3dPrice * 1.15);
+                updateDisplay();
+                updatePearto3dCount();
+                updatePrices();
+            } else {
+                alert(`Você precisa de mais ${pearto3dPrice - clicks} cliques!`);
+            }
+        }
+
+        function comprarDakimakura() {
+            if (clicks >= dakimakuraPrice) {
+                clicks -= dakimakuraPrice;
+                dakimakura += 1;
+                clicksPerSecond += 100;
+                dakimakuraPrice = Math.floor(dakimakuraPrice * 1.15);
+                updateDisplay();
+                updateDakimakuraCount();
+                updatePrices();
+            } else {
+                alert(`Você precisa de mais ${dakimakuraPrice - clicks} cliques!`);
+            }
+        }
+
+        function updateBebeCount() {
+            bebeCountElement.textContent = `Bebês Pêra: ${bebes} (+${(bebes * 0.1).toFixed(1)}/s)`;
+        }
+
+        function updatePeartoCount() {
+            peartoCountElement.textContent = `Peartos: ${peartos} (+${(peartos * 3).toFixed(1)}/s)`;
+        }
+
+        function updatePearlisonCount() {
+            pearlisonCountElement.textContent = `Pearlisons: ${pearlison} (+${(pearlison * 10).toFixed(1)}/s)`;
+        }
+
+        function updatePearto3dCount() {
+            pearto3dCountElement.textContent = `Pearto 3D: ${pearto3d} (+${(pearto3d * 50).toFixed(1)}/s)`;
+        }
+
+        function updateDakimakuraCount() {
+            dakimakuraCountElement.textContent = `Dakimakura: ${dakimakura} (+${(dakimakura * 100).toFixed(1)}/s)`;
+        }
+
+        function updatePrices() {
+            document.querySelectorAll('.price').forEach(el => {
+                const container = el.closest('.upgrade-item');
+                let price;
+                
+                if (container.id === 'baby') price = bebePrice;
+                else if (container.id === 'teto') price = peartoPrice;
+                else if (container.id === 'pearlison') price = pearlisonPrice;
+                else if (container.id === 'Pearto3d') price = pearto3dPrice;
+                else if (container.id === 'dakimakura') price = dakimakuraPrice;
+                
+                el.textContent = price;
+                
+                // Destaca se o jogador pode comprar
+                if (clicks >= price) {
+                    el.style.color = '#4CAF50';
+                    el.style.fontWeight = 'bold';
+                } else {
+                    el.style.color = '#F44336';
+                    el.style.fontWeight = 'normal';
+                }
+            });
+        }
+
+        function updateDisplay() {
+            quantidade.textContent = Math.floor(clicks);
+            updatePrices();
+        }
+
+        // Renda passiva
+        setInterval(function() {
+            if (clicksPerSecond > 0) {
+                clicks += clicksPerSecond;
+                updateDisplay();
+                
+                // Efeito visual de ganho passivo
+                if (Math.random() > 0.7) {
+                    const passive = document.createElement('div');
+                    passive.textContent = `+${clicksPerSecond.toFixed(1)}`;
+                    passive.style.position = 'fixed';
+                    passive.style.right = '20px';
+                    passive.style.bottom = '20px';
+                    passive.style.color = '#4CAF50';
+                    passive.style.fontWeight = 'bold';
+                    passive.style.fontSize = '1.2rem';
+                    passive.style.animation = 'fadeUp 1s forwards';
+                    document.body.appendChild(passive);
+                    setTimeout(() => passive.remove(), 1000);
+                }
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
